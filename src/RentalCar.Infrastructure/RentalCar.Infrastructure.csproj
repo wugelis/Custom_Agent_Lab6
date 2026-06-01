@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentalCar.Domain\RentalCar.Domain.csproj" />
+    <ProjectReference Include="..\RentalCar.Application\RentalCar.Application.csproj" />
+  </ItemGroup>
+
+</Project>

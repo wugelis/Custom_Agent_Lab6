@@ -1,0 +1,67 @@
+@{
+    ViewData["Title"] = "租用成功";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-success">
+                <div class="card-body text-center p-5">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+                    <h2 class="mt-4 mb-3">租用成功！</h2>
+                    <p class="lead text-muted mb-4">您的車輛預約已完成</p>
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <h5 class="alert-heading">
+                                <i class="bi bi-info-circle"></i> 預約詳情
+                            </h5>
+                            <hr>
+                            <p class="mb-0">@Html.Raw(TempData["Success"])</p>
+                            @if (TempData["RentalDetails"] != null)
+                            {
+                                <p class="mt-2 mb-0">@Html.Raw(TempData["RentalDetails"])</p>
+                            }
+                        </div>
+                    }
+
+                    <div class="card bg-light mt-4">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <i class="bi bi-calendar-event"></i> 預約編號
+                            </h6>
+                            <p class="font-monospace text-muted mb-0">@ViewBag.RentalId</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h6 class="text-muted mb-3">接下來您可以：</h6>
+                        <div class="d-grid gap-2 d-md-flex justify-content-center">
+                            <a asp-action="Index" class="btn btn-primary">
+                                <i class="bi bi-plus-circle"></i> 繼續租車
+                            </a>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-house"></i> 返回首頁
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <i class="bi bi-exclamation-triangle text-warning"></i> 注意事項
+                    </h6>
+                    <ul class="mb-0 small text-muted">
+                        <li>請於租用日期前至指定地點取車</li>
+                        <li>取車時請攜帶有效證件與駕照</li>
+                        <li>請妥善保管您的預約編號</li>
+                        <li>如需變更或取消預約，請聯繫客服</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

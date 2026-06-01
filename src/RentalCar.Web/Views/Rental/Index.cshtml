@@ -1,0 +1,135 @@
+@model CreateRentalViewModel
+@{
+    ViewData["Title"] = "車輛租用";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="bi bi-calendar-check"></i> 車輛租用預約
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- 步驟 1: 選擇車型 -->
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2 mb-3">
+                                <i class="bi bi-1-circle-fill text-primary"></i> 選擇車型
+                            </h5>
+                            <div class="row g-3">
+                                @foreach (var vehicle in Model.AvailableVehicleTypes)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-check card h-100">
+                                            <div class="card-body">
+                                                <input class="form-check-input" type="radio" 
+                                                       name="VehicleTypeName" 
+                                                       value="@vehicle.Name" 
+                                                       id="vehicle_@vehicle.Name"
+                                                       required>
+                                                <label class="form-check-label w-100" for="vehicle_@vehicle.Name">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h6 class="mb-0">@vehicle.Name</h6>
+                                                            <small class="text-muted">日租金</small>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <strong class="text-primary fs-5">NT$ @vehicle.DailyRate.ToString("N0")</strong>
+                                                            <br><small class="text-muted">/ 天</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <span asp-validation-for="VehicleTypeName" class="text-danger"></span>
+                        </div>
+
+                        <!-- 步驟 2: 選擇租用期間 -->
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2 mb-3">
+                                <i class="bi bi-2-circle-fill text-primary"></i> 選擇租用期間
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label asp-for="StartDate" class="form-label">
+                                        <i class="bi bi-calendar"></i> 開始日期
+                                    </label>
+                                    <input asp-for="StartDate" type="date" class="form-control" required 
+                                           min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="EndDate" class="form-label">
+                                        <i class="bi bi-calendar-check"></i> 結束日期
+                                    </label>
+                                    <input asp-for="EndDate" type="date" class="form-control" required 
+                                           min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 步驟 3: 確認租用 -->
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2 mb-3">
+                                <i class="bi bi-3-circle-fill text-primary"></i> 確認租用
+                            </h5>
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i> 
+                                請確認以上資訊無誤後，點擊「確認租用」按鈕完成預約。
+                                系統將自動計算租金總額。
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i> 取消
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="bi bi-check-circle"></i> 確認租用
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 價格說明 -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <i class="bi bi-info-circle text-primary"></i> 價格說明
+                    </h6>
+                    <ul class="mb-0">
+                        <li>租金計算方式：日租金 × 租用天數</li>
+                        <li>租用天數 = 結束日期 - 開始日期</li>
+                        <li>所有價格均為新台幣（TWD）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // 自動更新結束日期的最小值
+        document.getElementById('StartDate')?.addEventListener('change', function() {
+            const startDate = new Date(this.value);
+            const endDateInput = document.getElementById('EndDate');
+            if (endDateInput) {
+                const minEndDate = new Date(startDate);
+                minEndDate.setDate(minEndDate.getDate() + 1);
+                endDateInput.min = minEndDate.toISOString().split('T')[0];
+            }
+        });
+    </script>
+}

@@ -1,0 +1,105 @@
+@{
+    ViewData["Title"] = "首頁";
+}
+
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-4">
+            <i class="bi bi-car-front-fill"></i> 歡迎來到 RentalCar 租車系統
+        </h1>
+        <p class="lead mb-5">輕鬆預約，隨時出發！提供多種車型選擇，讓您的旅程更加便利。</p>
+        <div class="d-grid gap-3 d-md-flex justify-content-center">
+            @if (Context.Session.GetString("AccountId") != null)
+            {
+                <a asp-controller="Rental" asp-action="Index" class="btn btn-light btn-lg px-5">
+                    <i class="bi bi-calendar-check"></i> 立即租車
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg px-5">
+                    <i class="bi bi-person-plus"></i> 立即註冊
+                </a>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-lg px-5">
+                    <i class="bi bi-box-arrow-in-right"></i> 會員登入
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0">
+                <div class="card-body">
+                    <i class="bi bi-car-front feature-icon"></i>
+                    <h3 class="card-title">多種車型</h3>
+                    <p class="card-text">提供轎車、休旅車、貨車、跑車、電動車等多種選擇</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0">
+                <div class="card-body">
+                    <i class="bi bi-calendar-check feature-icon"></i>
+                    <h3 class="card-title">彈性租期</h3>
+                    <p class="card-text">自由選擇租車時間，按天計費，透明實惠</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0">
+                <div class="card-body">
+                    <i class="bi bi-lightning-charge feature-icon"></i>
+                    <h3 class="card-title">快速預約</h3>
+                    <p class="card-text">線上快速完成預約，省時又便利</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">車型與價格</h2>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>車型</th>
+                            <th>日租金</th>
+                            <th>特色</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="bi bi-car-front"></i> 轎車</td>
+                            <td class="fw-bold">NT$ 1,000 / 天</td>
+                            <td>經濟實惠，適合都市通勤</td>
+                        </tr>
+                        <tr>
+                            <td><i class="bi bi-truck"></i> 休旅車</td>
+                            <td class="fw-bold">NT$ 1,500 / 天</td>
+                            <td>空間寬敞，家庭出遊首選</td>
+                        </tr>
+                        <tr>
+                            <td><i class="bi bi-truck-front"></i> 貨車</td>
+                            <td class="fw-bold">NT$ 2,000 / 天</td>
+                            <td>載貨量大，搬家運輸好幫手</td>
+                        </tr>
+                        <tr>
+                            <td><i class="bi bi-lightning"></i> 跑車</td>
+                            <td class="fw-bold">NT$ 3,000 / 天</td>
+                            <td>高性能，享受駕馭樂趣</td>
+                        </tr>
+                        <tr>
+                            <td><i class="bi bi-battery-charging"></i> 電動車</td>
+                            <td class="fw-bold">NT$ 2,800 / 天</td>
+                            <td>環保節能，科技體驗</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
